@@ -81,11 +81,28 @@ public:
 				sf::FloatRect rectA = shapeObjs[i].getShape().getGlobalBounds();
 				sf::FloatRect rectB = shapeObjs[j].getShape().getGlobalBounds();
 
+				sf::Vector2f posA = shapeObjs[i].getShape().getPosition();
+				sf::Vector2f posB = shapeObjs[j].getShape().getPosition();
+
 				// Check if the bounding rectangles intersect
 				if (rectA.intersects(rectB)) {
 					// Collision detected between shapeObjs[i] and shapeObjs[j]
 					// Handle the collision as needed
-					
+					sf::Vector2f velocityA = sf::Vector2f((shapeObjs[i].getVelocity().x * -1), (shapeObjs[i].getVelocity().y * -1));
+					sf::Vector2f velocityB = sf::Vector2f((shapeObjs[j].getVelocity().x * -1), (shapeObjs[j].getVelocity().y * -1));
+
+					shapeObjs[i].setVelocity(velocityA);
+					shapeObjs[j].setVelocity(velocityB);
+
+					sf::Vector2f updatedPosA = posA + shapeObjs[i].getVelocity();
+					sf::Vector2f updatedPosB = posB + shapeObjs[j].getVelocity();
+
+					shapeObjs[i].updatePosition(updatedPosA);
+					shapeObjs[j].updatePosition(updatedPosB);
+
+					ShapeMgr::updateShapePos(updatedPosA, shapeObjs[i]);
+					ShapeMgr::updateShapePos(updatedPosB, shapeObjs[j]);
+
 					// Return true to indicate a collision occurred
 					return true;
 				}
@@ -94,6 +111,12 @@ public:
 
 		// No collisions found
 		return false;
+	}
+
+	template <typename T, typename K>
+	bool diffObjectCollision(std::vector<T>& shapeObjA, std::vector<K>& shapeObjB)
+	{
+
 	}
 
 	template <typename T>

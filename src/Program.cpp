@@ -74,6 +74,7 @@ void Program::update()
 			sf::Vector2f pos = shapeMgr.squareObjs[i].getShape().getPosition();
 			physics.RandomMoveShape(shapeMgr.squareObjs[i]);
 			physics.CheckWindowCollision(shapeMgr.squareObjs[i]);
+			physics.sameObjectCollision(shapeMgr.squareObjs);
 		}
 	}
 
@@ -84,6 +85,7 @@ void Program::update()
 			sf::Vector2f pos = shapeMgr.circleObjs[i].getShape().getPosition();
 			physics.RandomMoveShape(shapeMgr.circleObjs[i]);
 			physics.CheckWindowCollision(shapeMgr.circleObjs[i]);
+			physics.sameObjectCollision(shapeMgr.circleObjs);
 		}
 	}
 
